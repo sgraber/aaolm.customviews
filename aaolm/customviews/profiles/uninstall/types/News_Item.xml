@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="News Item">
+    <property name="view_methods" purge="False">
+        
+        <element value="blogentry_bottom_view" remove="True"/>
+        <element value="blogentry_sm_view" remove="True" />
+        <element value="blogentry_view" remove="True" />
+        
+    </property>
+</object>

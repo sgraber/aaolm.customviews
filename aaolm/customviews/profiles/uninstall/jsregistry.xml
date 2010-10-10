@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<object 
+    name="portal_javascripts" 
+    meta_type="JavaScripts Registry">
+    
+    <javascript  
+        id="googlemaps.js"
+        cacheable="True" 
+        compression="safe"
+        conditionalcomment="" 
+        cookable="True" 
+        enabled="False" 
+        expression="python:context.portal_type in ['Topic', 'Event']" 
+        inline="False"
+        />  
+    
+    <javascript  
+        id="simile.timeline.view.js"
+        cacheable="True" 
+        compression="safe"
+        conditionalcomment=""
+        cookable="True" 
+        enabled="True" 
+        expression="python:context.portal_type in ['Topic', 'Event']"
+        inline="False"
+        />
+
+    <javascript  
+        id="jquery.embedly.min.js"
+        cacheable="True" 
+        compression="safe"
+        conditionalcomment=""
+        cookable="True" 
+        enabled="True" 
+        expression=""
+        inline="False"
+        /> 
+    
+    <javascript  
+        id="jquery.nivo.slider.pack.js"
+        cacheable="True" 
+        compression="safe"
+        conditionalcomment=""
+        cookable="True" 
+        enabled="True" 
+        expression=""
+        inline="False"
+        />
+    
+</object>
+
+
+

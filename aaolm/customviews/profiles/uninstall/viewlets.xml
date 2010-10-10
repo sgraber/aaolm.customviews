@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object>
+	<hidden manager="plone.belowcontenttitle" skinname="Plone Default" purge="True" />
+	    <viewlet name="plone.belowcontenttitle.documentbyline" remove="True" />
+	    <viewlet name="aaolm.customviews.documentbyline" />
+	</hidden>
+</object>

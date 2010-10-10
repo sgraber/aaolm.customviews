@@ -1,0 +1,21 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="aaolm.customviews">
+
+    <!-- -*- extra stuff goes here -*- -->
+  
+    <!-- Render the document byline -->
+    <browser:viewlet
+        name="aaolm.customviews.documentbyline"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+        class=".content.AaolmDocumentBylineViewlet"
+        permission="zope2.View"
+    />
+  
+</configure>

@@ -1,0 +1,38 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="aaolm.customviews">
+
+    <five:registerPackage package="." initialize=".initialize" />
+
+    <!-- -*- extra stuff goes here -*- -->
+  
+    <include package=".browser" />
+  
+    <!-- File System Directory Views registration -->
+    <cmf:registerDirectory directory="skins/customviews" name="aaolm_customviews" />
+  
+    <!-- Register the installation GenericSetup extension profile -->
+    <genericsetup:registerProfile
+        name="default"
+        title="AAOLM Custom Views"
+        directory="profiles/default"
+        description="Different views for the Advanced Aquarist site (Plone 4)."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        />
+
+    <genericsetup:registerProfile
+        name="uninstall"
+        title="AAOLM Custom Views Uninstall Profile"
+        directory="profiles/uninstall"
+        description="Different views for Plone 4."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        />
+
+</configure>

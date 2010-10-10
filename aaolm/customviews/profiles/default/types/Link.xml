@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="Link"> 
+    <property name="view_methods" purge="false">
+        <element value="video_view" />
+    </property>
+    <property name="allow_discussion">True</property>
+</object>

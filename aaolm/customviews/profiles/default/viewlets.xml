@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<object>
+	<hidden manager="plone.belowcontenttitle" skinname="*">
+        <viewlet name="plone.belowcontenttitle.documentbyline" />
+        <viewlet name="aaolm.customviews.documentbyline" remove="True" />
+	</hidden>
+	
+    <order manager="plone.belowcontenttitle" 
+           skinname="customviews"
+           based-on="Plone Default">
+
+        <viewlet name="aaolm.customviews.documentbyline"
+                 insert-before="*" />
+
+    </order>
+
+</object>

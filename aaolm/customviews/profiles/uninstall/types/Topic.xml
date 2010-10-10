@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<object name="Topic"> 
+    <property name="view_methods">
+        
+        <element value="atct_topic_timemap_view" />
+        <element value="folder_blog_view" />
+        <element value="folder_summary_toc_view" />
+        <element value="folder_summary_tocimg_view" />
+        <element value="folder_summary_volume_view" />  
+        
+    </property>
+</object>

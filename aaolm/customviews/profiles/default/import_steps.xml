@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<import-steps
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+ <import-step id="aaolm.customviews-install-final"
+              version="2010-10-08"
+              handler="aaolm.customviews.setuphandlers.installFinalSteps"
+              title="Final Config">
+  <dependency step="plone-final" />
+    Final configuration
+ </import-step>
+
+</import-steps>
