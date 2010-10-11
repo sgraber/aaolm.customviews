@@ -1,0 +1,416 @@
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/xml')" />
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('Content-Disposition', 'attachment')" />
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('charset', 'UTF-8')" />
+<html xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<head>
+    <title><span tal:content="context/Title" tal:omit-tag="" /> | <span tal:content="context/Description" tal:omit-tag="" /></title> 
+    <style type="text/css"> 
+        @import "princexml/paged.css";              <!-- pagination styling         -->
+        @import "princexml/princexml-testing.css";  <!-- general styling            -->
+        @import "princexml/advertising.css";        <!-- ads w/in the content       -->
+        @import "princexml/marinenews.css";         <!-- online news section        -->
+        @import "princexml/advertisers.css";        <!-- advertisers @ back of pdf  -->
+    </style>
+    <meta name="owner-password" content="adsf3245hs2" />
+    <meta name="title" content="" tal:attributes="content string: Advanced Aquarist's Online Magazine: ${context/Description}, ${context/Title}" />
+    <meta name="author" content="Advanced Aquarist's Online Magazine (ISSN 1931-6895), Pomacanthus Publications, Inc." />
+    <meta name="subject" content="A central goal of this publication is to promote exchange between the scientific community and amateur aquarists, for the benefit of both. Advanced Aquarist's Online Magazine will always emphasize protection and understanding of the natural environment." />
+    <meta name="keywords" content="Advanced Aquarist, Magazine, Aquarium, Aquarist, Saltwater, Marine, Coral, Reef, Reefkeeping, Lighting, Equipment, Propagation " />
+</head>
+
+<body tal:on-error="string:">
+
+
+
+<div id="section">
+
+    <div id="frontcover">
+        <h1 class="noheight">Magazine Cover - Advanced Aquarist's Online Magazine
+            <img src="frontcover.jpg" alt="Front Cover" /> 
+        </h1>
+    </div>     
+    
+    <!-- ========================== -->
+    <!-- FULL PAGE AD COULD GO HERE -->
+    <!-- ========================== -->
+    <!-- <div class="fullpagead"> -->
+    <!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+    <!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+    <!-- </div> -->	
+    <!-- ========================== -->				
+    <!--    END FULL PAGE AD CODE   -->
+    <!-- ========================== -->
+
+</div>
+
+
+
+<tal:block tal:define="presults python:container.portal_catalog(portal_type=['Document'], 
+                                                                path='/'.join(here.getPhysicalPath()),
+                                                                review_state=['private', 'published'],
+                                                                sort_on='id')"
+           tal:condition="presults"
+           tal:on-error="nothing">
+
+    <div id="section">
+    <div id="toc">
+
+        <div id="information">
+			<div tal:replace="nothing" tal:omit-tag="">
+				Masthead (Floated Left) - Contains magazine content information and contact information.
+			</div>
+            <xi:include href="princexml/masthead.xml" />
+        </div>    
+        
+        <h1 class="noheight">Table of Contents</h1>        
+
+
+        <p class="masthead"><img src="princexml/masthead.png" alt="Masthead Graphic" /></p>
+        
+        <div class="article-title centered">Table of Contents</div>    
+        
+        <div class="toc-publication-date">
+            <span tal:content="context/Description">Volume, Issue</span>
+            <span class="right" tal:content="context/Title">February 2002</span>
+        </div>
+        
+        <div id="toc-contents">                 
+                   
+            <ul>    
+                <li tal:repeat="p presults"
+                    class=""
+                    tal:attributes="class python: p.getObject().getId()">
+                    
+                    <div class="article-column"
+                         tal:content="python: p.getObject().Title()[:p.getObject().Title().find(':')]">Article Column</div>
+                    
+                    <a class="article-title-link"
+                       href="#"
+                       tal:attributes="href python: '#' + p.getObject().getId()">
+                        <span class="article-title"
+                              tal:content="python: p.getObject().Title()[p.getObject().Title().find(':')+1:].lstrip()">
+							  Article Title
+						</span>
+					</a>
+                              
+                    <br />                        
+                    <div class="article-authors">
+                        By
+                        <span tal:omit-tag=""
+                              tal:content="python: ', '.join(p.getObject().Contributors())">
+                          Jama
+                        </span>
+                    </div>
+                    <div class="documentDescription"
+                         tal:content="python: p.getObject().Description()">Article Description</div>
+                </li>
+                
+                <li class="marinenews">
+                    <div class="article-column">
+                        Online News
+                    </div>
+                    
+                    <a class="article-title-link"
+                       href="#marinenews">
+                        <span class="article-title">Reefs in the News</span>
+                    </a>
+                              
+                    <br />                        
+                    <div class="article-authors">
+                        From Online News Sources
+                    </div>
+                    <div class="documentDescription">
+                        Media coverage of the state of our world's reefs, interesting information, and other marine-related news.
+                    </div>
+                </li>
+
+		<li class="advertisers">
+                    <div class="article-column">
+                        Sponsors
+                    </div>
+                    
+
+                    <a class="article-title-link" href="#advertisers">
+                        <span class="article-title">Thank you to our Sponsors!</span>
+                    </a>
+                              
+                    <br />                        
+
+                    <div class="documentDescription">
+					We would like to thank the sponsors that make this publication possible! Through their generous sponsorship, they have made this website and online magazine available to all. Make sure that when you do business with our sponsors that you tell them that you saw their ad on Reefs.org or Advanced Aquarist. 
+                    </div>
+                </li>
+                
+            </ul>
+        </div>   
+
+<!-- ========================== -->
+<!-- HALF PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- NOTE: use 'ad-top' to float the ad to the TOP of the page       -->
+<!-- NOTE: use 'ad-bottom' to float the ad to the BOTTOM of the page -->
+<!-- =============================================================== -->
+        <div class="half-ad ad-top">
+            <a href="http://www.reefs.org">
+                <img src="princexml/ads/halfad.jpg" alt="half page ad" />
+            </a>
+        </div>  
+<!-- ========================== -->				
+<!--    END HALF PAGE AD CODE   -->
+<!-- ========================== -->  
+		          
+        <div id="copyright-content">
+			<h1 tal:replace="nothing" tal:omit-tag="">Copyright Box</h1>        
+            <xi:include href="princexml/copyright.xml" />
+        </div>                
+    
+    </div>
+    </div>
+
+<!-- ========================== -->
+<!-- FULL PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+<!-- </div> -->
+<!-- ========================== -->				
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+
+    <!-- START: MAGAZINE-CONTENT class -->
+    <div id="magazine-content">
+    
+        <tal:loop tal:repeat="p presults">
+            
+            <div id="section">
+            <div id="" 
+                 tal:attributes="id python: p.getObject().getId()">
+                 <a name="#" tal:attributes="name python: '#' + p.getObject().getId()" />
+    
+                <div id="title-byline">
+                
+                    <div class="article-column"
+                         tal:content="python: p.getObject().Title()[:p.getObject().Title().find(':')]">Column Title</div>                
+                
+                    <h1 class="article-title"
+                        tal:content="python: p.getObject().Title()[p.getObject().Title().find(':')+1:].lstrip()">Article Title</h1>
+                        
+                    <div class="article-authors">
+                        By
+                        <span tal:omit-tag=""
+                              tal:content="python: ', '.join(p.getObject().Contributors())">
+                          Jama
+                        </span>
+                    </div>                        
+                  
+                    <div class="documentDescription"
+                         tal:content="python: p.getObject().Description()">Article Description</div>
+                
+
+                    <div class="copyright">
+                      Published <span tal:content="context/Title" tal:omit-tag="">Month, Year</span>, 
+                         Advanced Aquarist's Online Magazine.
+                         <span class="right">&#xA9; Pomacanthus Publications, LLC</span>
+                    </div><!-- closes class="copyright" -->
+   
+	        <!-- START: keyword listing -->
+		<div class="keywords-list"
+		     tal:define="keywords python: p.getObject().Subject()"
+		     tal:condition="keywords"
+		     tal:on-error="string:">
+			Keywords (AdvancedAquarist.com Search Enabled):
+			<tal:loop tal:repeat="keyword keywords">	
+			    <a href="" title="Click to search" rel="tag"
+			       tal:attributes="href python: context.portal_url() + '/search?SearchableText=&Title=&Subject%3Alist=' + keyword + '&Description=&created%3Adate=1970%2F02%2F01+00%3A00%3A00+GMT&created_usage=range%3Amin&Creator=&submit=Search'"
+			       tal:content="keyword">Keyword</a><span tal:define="last repeat/keyword/end" 
+								      tal:omit-tag=""
+								      tal:content="string:, " 
+								      tal:condition="python: not last">, </span>
+			</tal:loop>
+		</div>
+		<!-- END: keyword listing -->
+
+		<!-- START: permalink -->
+		<div class="permalink">Link to original article: 
+			<a href="#" 
+                           tal:attributes="href python: p.getObject().absolute_url()"
+                           tal:content="python: p.getObject().absolute_url()">
+                             http://the.link.com/to/the/original/article
+                        </a>
+		</div>
+		<!-- END: permalink -->
+
+                </div>
+                
+                <div id="article-content">
+					<p tal:replace="nothing" tal:omit-tag="">Article body goes here.</p>
+                    <xi:include href=""
+                                tal:attributes="href python: p.getObject().getId() + '.xml'" />
+                </div>
+
+<!-- ========================== -->
+<!-- HALF PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- NOTE: use 'ad-top' to float the ad to the TOP of the page       -->
+<!-- NOTE: use 'ad-bottom' to float the ad to the BOTTOM of the page -->
+<!-- =============================================================== -->
+<!--            <div class="half-ad ad-bottom"> -->
+<!--                <a href="http://www.reefs.org"> -->
+<!--                    <img src="princexml/ads/halfad.jpg" alt="half page ad" /> -->
+<!--                </a> -->
+<!--            </div> -->
+<!-- ========================== -->				
+<!--    END HALF PAGE AD CODE   -->
+<!-- ========================== -->  
+                
+            </div>
+            </div>
+			
+<!-- ========================== -->
+<!-- FULL PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+<!-- </div> -->
+<!-- ========================== -->				
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+        </tal:loop>
+            
+    </div>
+    <!-- END: MAGAZINE-CONTENT class -->
+
+</tal:block>
+
+
+<!-- START: MAGAZINE-CONTENT class -->
+<div id="magazine-content">
+<div id="section">
+<div id="marinenews">
+<a name="#marinenews" />
+
+                <div id="title-byline">
+                
+                    <div class="article-column">Online News</div>               
+                
+                    <h1 class="article-title">Reefs in the News</h1>
+                        
+                    <div class="article-authors">
+                        From Online News Sources
+                    </div>                        
+                  
+                    <div class="documentDescription">Media coverage of the state of our world's reefs, interesting information, and other marine-related news.</div>
+                
+                    <div class="copyright">
+                      Published <span tal:content="context/Title" tal:omit-tag="">Month, Year</span>, 
+                         Advanced Aquarist's Online Magazine.
+                         <span class="right">&#xA9; Pomacanthus Publications, LLC</span>
+                    </div>     
+
+		<!-- START: permalink -->
+		<div class="permalink">Link to original article: 
+			<a href="http://www.advancedaquarist.com/marinenews">http://www.advancedaquarist.com/marinenews</a>
+		</div>
+		<!-- END: permalink -->
+
+                </div>
+                
+                <div id="article-content">
+		    <p tal:replace="nothing" tal:omit-tag="">Article body goes here.</p>
+                    <xi:include href="marinenews.xml" />
+                </div>
+
+<!-- ========================== -->
+<!-- HALF PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- NOTE: use 'ad-top' to float the ad to the TOP of the page       -->
+<!-- NOTE: use 'ad-bottom' to float the ad to the BOTTOM of the page -->
+<!-- =============================================================== -->
+<!--            <div class="half-ad ad-bottom"> -->
+<!--                <a href="http://www.reefs.org"> -->
+<!--                    <img src="princexml/ads/halfad.jpg" alt="half page ad" /> -->
+<!--                </a> -->
+<!--            </div> -->
+<!-- ========================== -->				
+<!--    END HALF PAGE AD CODE   -->
+<!-- ========================== -->   
+               
+</div>
+
+
+<!-- ========================== -->
+<!-- FULL PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+<!-- </div> -->
+<!-- ========================== -->				
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+		<div id="section">
+			<div id="advertisers">
+				<a name="#advertisers" />
+
+                <div id="title-byline">
+                    <div class="article-column">Sponsors</div>               
+                
+                    <h1 class="article-title">Thank You to our Sponsors!</h1>
+				</div>
+                                        
+                <div class="documentDescription">
+				We would like to thank the sponsors that make this publication possible! Through their generous sponsorship, they have made this website and online magazine available to all. Make sure that when you do business with our sponsors that you tell them that you saw their ad on Reefs.org or Advanced Aquarist. 
+				</div>
+                
+                <div class="copyright">
+                      Published <span tal:content="context/Title" tal:omit-tag="">Month, Year</span>, 
+                         Advanced Aquarist's Online Magazine.
+                         <span class="right">&#xA9; Pomacanthus Publications, LLC</span>
+                </div>     
+                    
+            
+                
+            <div id="article-content">
+		<p tal:replace="nothing" tal:omit-tag="">Article body goes here.</p>
+                <xi:include href="advertisers.xml" />
+            </div>
+			
+			</div>
+
+		</div>
+
+</div>
+</div>
+<!-- END: MAGAZINE-CONTENT class -->
+
+
+<!-- ========================== -->
+<!-- FULL PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+<!-- </div> -->
+<!-- ========================== -->				
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+
+<div id="backcover">
+	<h1 class="noheight">Back Cover
+		<img src="princexml/ads/backcover.jpg" alt="Back Cover" />
+	</h1>
+</div>
+
+
+</body>
+</html>
