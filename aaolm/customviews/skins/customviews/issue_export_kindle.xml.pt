@@ -1,4 +1,10 @@
-<html>
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/xml')" />
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('Content-Disposition', 'attachment')" />
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('charset', 'UTF-8')" />
+<html xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+      
 <head>
 <title>kindle feeds</title>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
