@@ -1,0 +1,370 @@
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/xml')" />
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('Content-Disposition', 'attachment')" />
+<metal:block tal:define="dummy python:request.RESPONSE.setHeader('charset', 'UTF-8')" />
+<html xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<head>
+    <title><span tal:content="context/Title" tal:omit-tag="" /> | <span tal:content="context/Description" tal:omit-tag="" /></title> 
+    <style type="text/css"> 
+        @import "princexml/princexml-testing-2007-10-17.css"; 
+        @import "princexml/advertisers.css";
+        @import "princexml/advertising.css"; 
+        @import "princexml/marinenews.css"; 
+        @import "princexml/for-print-only.css";
+    </style>
+</head>
+
+<!--   -->
+
+<body tal:define="folders python: [['7', 'July'], ['8', 'August'], ['9', 'September'], ['10', 'October'], ['11', 'November'], ['12', 'December'], ]">
+
+	  <!-- 'folders' defines the folder names to iterate thru.               -->
+	  <!-- easier than dealing w/ portal catalog for such a simple use case! -->
+
+<div id="section">
+	<div class="cover-photo-wrapper"></div>
+	<h1 class="hide">Magazine Cover<br />Advanced Aquarist's Online Magazine</h1>
+
+<!-- ========================== -->
+<!-- FULL PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+<!-- </div> -->	
+<!-- ========================== -->				
+
+
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+</div>
+
+
+    <div id="section">
+    <div id="toc">
+
+        <div id="information">
+			<div tal:replace="nothing" tal:omit-tag="">
+
+				Masthead (Floated Left) - Contains magazine content information and contact information.
+			</div>
+
+            <xi:include href="princexml/masthead.xml" />
+        </div>    
+        
+        <h1 class="hide">Table of Contents</h1>        
+
+
+        <p class="masthead"><img src="princexml/masthead.png" alt="Masthead Graphic" /></p>
+        
+        <div class="article-title centered">Table of Contents</div>    
+        
+        <div class="toc-publication-date">
+            <span tal:content="context/Title">Volume</span>
+
+            <span class="right">2007 Edition</span>
+
+        </div>
+        
+        <div id="toc-contents">                 
+
+<tal:volume tal:repeat="folder folders">
+<tal:block tal:define="presults python:container.portal_catalog(portal_type=['Document'], 
+                                                                path='/'.join(here.getPhysicalPath())+'/'+folder[0]+'/',
+                                                                review_state=['published'],
+                                                                sort_on='id')"
+           tal:condition="presults">
+
+            <h1 class="toc-month" 
+                tal:content="python: folder[1]">
+              Month
+            </h1>    
+   
+            <ul>    
+	        <tal:toc tal:repeat="p presults">
+                <li class=""
+                    tal:attributes="class python: 'f'+folder[0]+ ' '+ p.getObject().getId()"
+					tal:condition="python: p.getObject().getId() not in ['mystery', 'events', 'neptune', 'tips', 'aa-announcement', 'maco', 'sponsor', 'podcast', 'vault', 'video', ]">
+                    
+                    <div class="article-column"
+                         tal:content="python: p.getObject().Title()[:p.getObject().Title().find(':')]">Article Column</div>
+
+                    
+                    <a class="article-title-link"
+                       href="#"
+                       tal:attributes="href python: '#'+folder[1]+'-'+ p.getObject().getId()">
+                        <span class="article-title"
+                              tal:content="python: p.getObject().Title()[p.getObject().Title().find(':')+1:].lstrip()">
+
+							  Article Title
+						</span>
+					</a>
+                              
+                    <br />                        
+                    <div class="article-authors">
+                        By
+                        <span tal:omit-tag=""
+                              tal:content="python: ', '.join(p.getObject().Contributors())">
+                          Jama
+                        </span>
+
+                    </div>
+                    <div class="documentDescription"
+                         tal:content="python: p.getObject().Description()">Article Description</div>
+
+                </li>
+		</tal:toc>
+                
+            </ul>
+</tal:block>
+</tal:volume>
+        </div>   
+
+<!-- ========================== -->
+
+<!-- HALF PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- NOTE: use 'ad-top' to float the ad to the TOP of the page       -->
+<!-- NOTE: use 'ad-bottom' to float the ad to the BOTTOM of the page -->
+
+<!-- =============================================================== -->
+        <div class="half-ad ad-top">
+            <a href="http://www.reefs.org">
+                <img src="princexml/ads/halfad.jpg" alt="half page ad" />
+            </a>
+        </div>  
+<!-- ========================== -->				
+
+<!--    END HALF PAGE AD CODE   -->
+<!-- ========================== -->  
+		          
+        <div id="copyright-content">
+			<h1 tal:replace="nothing" tal:omit-tag="">Copyright Box</h1>        
+            <xi:include href="princexml/copyright.xml" />
+
+        </div>                
+    
+    </div>
+    </div>
+
+
+<!-- ========================== -->
+<!-- FULL PAGE AD COULD GO HERE -->
+
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+<!-- </div> -->
+<!-- ========================== -->				
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+    <!-- START: MAGAZINE-CONTENT class -->
+    <div id="magazine-content">
+
+	<tal:volume tal:repeat="folder folders">
+	<tal:block tal:define="presults python:container.portal_catalog(portal_type=['Document'], 
+																	path='/'.join(here.getPhysicalPath())+'/'+folder[0]+'/',
+																	review_state=['published'],
+																	sort_on='id')"
+			   tal:condition="presults">
+
+		       
+        <tal:loop tal:repeat="p presults">
+            
+            <div id="section"
+			     tal:condition="python: p.getObject().getId() not in ['mystery', 'events', 'neptune', 'tips', 'aa-announcement', 'maco', 'sponsor', 'podcast', 'vault', 'video', ]">
+            <div id="" 
+                 tal:attributes="id python: folder[1] + '-' + p.getObject().getId()">
+                 <a name="#" tal:attributes="name python: '#' + folder[1] + '-' + p.getObject().getId()" />
+    
+                <div id="title-byline">
+                
+                    <div class="article-column"
+                         tal:content="python: p.getObject().Title()[:p.getObject().Title().find(':')]">Column Title</div>                
+                
+                    <h1 class="article-title"
+                        tal:content="python: p.getObject().Title()[p.getObject().Title().find(':')+1:].lstrip()">Article Title</h1>
+
+                        
+                    <div class="article-authors">
+
+                        By
+                        <span tal:omit-tag=""
+                              tal:content="python: ', '.join(p.getObject().Contributors())">
+                          Jama
+                        </span>
+                    </div>                        
+                  
+                    <div class="documentDescription"
+                         tal:content="python: p.getObject().Description()">Article Description</div>
+                
+
+                    <div class="copyright">
+                      Published <span tal:content="python: folder[1] + ' 2007'" tal:omit-tag="">Month, Year</span>, 
+                         Advanced Aquarist's Online Magazine
+                         <span class="right">&#xA9; Pomacanthus Publications, LLC</span>
+
+                    </div><!-- closes class="copyright" -->
+   
+	        <!-- START: keyword listing -->
+		<div class="keywords-list"
+		     tal:define="keywords python: p.getObject().Subject()"
+		     tal:condition="keywords"
+		     tal:on-error="string:">
+			Keywords<span class="search-enabled"> (AdvancedAquarist.com Search Enabled)</span>:
+			<tal:loop tal:repeat="keyword keywords">	
+			    <a href="" title="Click to search" rel="tag"
+			       tal:attributes="href python: context.portal_url() + '/search?SearchableText=&Title=&Subject%3Alist=' + keyword + '&Description=&created%3Adate=1970%2F02%2F01+00%3A00%3A00+GMT&created_usage=range%3Amin&Creator=&submit=Search'"
+			       tal:content="keyword">Keyword</a><span tal:define="last repeat/keyword/end" 
+								      tal:omit-tag=""
+								      tal:content="string:, " 
+								      tal:condition="python: not last">, </span>
+			</tal:loop>
+		</div>
+
+		<!-- END: keyword listing -->
+
+		<!-- START: permalink -->
+		<div class="permalink">Link to original article: 
+			<a href="#" 
+                           tal:attributes="href python: p.getObject().absolute_url()"
+                           tal:content="python: p.getObject().absolute_url()">
+                             http://the.link.com/to/the/original/article
+                        </a>
+		</div>
+		<!-- END: permalink -->
+
+                </div>
+
+                
+                <div id="article-content">
+
+					<p tal:replace="nothing" tal:omit-tag="">Article body goes here.</p>
+                    <xi:include href=""
+                                tal:attributes="href python: folder[0] + '/' + p.getObject().getId() + '.xml'" />
+                </div>
+
+<!-- ========================== -->
+<!-- HALF PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- NOTE: use 'ad-top' to float the ad to the TOP of the page       -->
+<!-- NOTE: use 'ad-bottom' to float the ad to the BOTTOM of the page -->
+<!-- =============================================================== -->
+
+<!--            <div class="half-ad ad-bottom"> -->
+<!--                <a href="http://www.reefs.org"> -->
+<!--                    <img src="princexml/ads/halfad.jpg" alt="half page ad" /> -->
+
+<!--                </a> -->
+<!--            </div> -->
+<!-- ========================== -->				
+<!--    END HALF PAGE AD CODE   -->
+<!-- ========================== -->  
+                
+            </div>
+            </div>
+			
+<!-- ========================== -->
+<!-- FULL PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+<!-- </div> -->
+<!-- ========================== -->				
+
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+        </tal:loop>
+	</tal:block>
+	</tal:volume>            
+    </div>
+    <!-- END: MAGAZINE-CONTENT class -->
+
+
+
+<!-- START: MAGAZINE-CONTENT class --><!-- START: MAGAZINE-CONTENT class -->
+<div id="magazine-content">
+
+<!-- ========================== -->
+<!-- FULL PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+<!-- </div> -->
+<!-- ========================== -->				
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+		<div id="section">
+			<div id="advertisers">
+				<a name="#advertisers" />
+
+                <div id="title-byline">
+                    <div class="article-column">Sponsors</div>               
+                
+                    <h1 class="article-title">Thank You to our Sponsors!</h1>
+				</div>
+                                        
+                <div class="documentDescription">
+
+				We would like to thank the sponsors that make this publication possible! Through their generous sponsorship, they have made this website and online magazine available to all. Make sure that when you do business with our sponsors that you tell them that you saw their ad on Reefs.org or Advanced Aquarist. 
+				</div>
+                
+                <div class="copyright">
+
+                      Published <span tal:content="context/Title" tal:omit-tag="">Month, Year</span>, 
+                         Advanced Aquarist's Online Magazine.
+                         <span class="right">&#xA9; Pomacanthus Publications, LLC</span>
+                </div>     
+                    
+            
+                
+            <div id="article-content">
+		<p tal:replace="nothing" tal:omit-tag="">Article body goes here.</p>
+
+                <xi:include href="advertisers.xml" />
+            </div>
+
+			
+			</div>
+
+		</div>
+
+</div>
+
+<!-- END: MAGAZINE-CONTENT class -->
+
+
+<!-- ========================== -->
+
+<!-- FULL PAGE AD COULD GO HERE -->
+<!-- ========================== -->
+<!-- <div class="fullpagead"> -->
+<!-- 	<h1 tal:replace="nothing" tal:omit-tag="">FULL PAGE AD</h1> -->
+<!-- 	<img src="princexml/ads/NAME-OF-FULL-PAGE-AD.jpg" alt="Page Ad" /> -->
+
+<!-- </div> -->
+<!-- ========================== -->				
+<!--    END FULL PAGE AD CODE   -->
+<!-- ========================== -->
+
+
+<div id="backcover">
+	<h1 tal:replace="nothing" tal:omit-tag="">Back Cover</h1>
+	<img src="princexml/ads/backcover.jpg" alt="Back Cover" />
+
+</div>
+
+
+</body>
+</html>
